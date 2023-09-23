@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      {{ message }}
+
+      <p>
+        Создать параграф, внутри которого будет отображаться текст “Товаров в
+        корзине 0” Создать кнопку “Купить”, при клике на которую, значение
+        внутри параграфа будет увеличиваться на 1, при повторном нажатии на эту
+        кнопку, счетчик не становится больше, добавить 4 таких кнопки При
+        нажатии на кнопку купить, необходимо чтобы текст внутри кнопки поменялся
+        на “Товар в Корзине”
+      </p>
+
+      <h3>Товаров в корзине {{ count }}</h3>
+      <div>
+        <div v-for="good in goods">
+            <p>{{ good.name }}</p>
+            <button @click="byProduct(good)">{{ good.text }}</button>
+        </div>
+      </div>
+      <p>Создать две кнопки “Мне исполнилось 14 лет” и “Мне еще нет 14 лет”
+        Если пользователь нажимает на первую кнопку, то должен отобразиться текст. “Можете заказать товар”
+        Если пользователь нажимает на вторую кнопку, отображается текст “Доступ закрыт”</p>
+        <div>
+            <div>
+                <button @click="setStatus(true)">Мне исполнилось 14 лет</button>
+                <button @click="setStatus(false)">Мне еще нет 14 лет</button>
+                <p v-if="isAllowed">Можете заказать товар</p>
+                <p v-else>Доступ закрыт</p>
+            </div>
+        </div>
+        <div>
+            <p>Создать кнопку “Показать еще” при клике на которую появляется контент под кнопкой, при повторном клике, контент необходимо скрыть
+            </p>
+            <button @click="addTextButton">Показать еще</button>
+            <p v-if="isTextBtn">Еще много всего</p>
+        </div>
+        <div>
+            <p>Создайте кнопку "Генерировать случайное число". При клике на кнопку должно отображаться случайное число в заданном диапазоне (например, от 1 до 10).
+                При клике на кнопку, если полученное значение меньше 5, необходимо вывести на страницу, “Число меньше 5”
+                Если число от 5 до 9, необходимо вывести “Число от 5 до 9”
+                Если число равно 10, необходимо вывести “Число равно 10”
+                </p>
+                <button @click="randomNumber(0, 11)">Генерировать случайное число</button>
+                <p>Число {{ randomNum }}</p>
+                <p v-if="numberString">{{ numberString }}</p>
+                <!-- <p v-if="randomNum < 5">Число меньше 5</p>
+                <p v-else-if="randomNum>=5 && randomNum<10">Число от 5 до 9</p>
+                <p v-else>Число равно 10</p> -->
+
+        </div>
+    </div>
+
+    <script>
+      const app = new Vue({
+        el: "#app",
+        data: {
+            randomNum: 0,
+            isTextBtn: false,
+            isAllowed: false,
+          message: "Привет, Vue!",
+          count: 0,
+          goods: [
+            { id: 1, text: "Купить", name: 'good 1', inCart: false },
+            { id: 2, text: "Купить", name: 'good 2', inCart: false },
+            { id: 3, text: "Купить", name: 'good 3', inCart: false },
+            { id: 4, text: "Купить", name: 'good 4', inCart: false },
+          ],
+          
+        },
+        methods: {
+            randomNumber(min, max) {
+                min = Math.ceil(min);
+                max = Math.floor(max);
+                this.randomNum = Math.floor(Math.random() * (max - min)) + min;
+                return randomNum;
+            },
+            addTextButton(){
+                this.isTextBtn = !this.isTextBtn;
+
+            },
+            setStatus(status) {
+                this.isAllowed = status;
+            },
+          
+          byProduct(good) {
+            if (good.inCart) return;
+            good.inCart = true;
+            good.text = "товар в корзине";
+            this.count++;
+          },
+        },
+        computed: {
+            numberString() {
+                const { randomNum } = this; // равно const randomNum = this.randomNum
+                if (randomNum < 5) return 'Число меньше 5';
+                if (randomNum >= 5 && randomNum < 10) return 'от 5 до 9'
+                else return 'Число равно 10';
+            }
+        }
+      });
+    </script>
+  </body>
+</html>
