@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <p>Вы разрабатываете страницу для отображения информации о товаре. У вас есть объект product, который содержит информацию о товаре, включая название, цену и URL изображения товара. Вам необходимо отобразить эту информацию на странице с использованием v-bind.
+            Добавьте кнопку, которая будет изменять цену товара. При нажатии на кнопку должна генерироваться скидка на товар от 1 до 20% и обновиться цена товара в соответствии с значением скидки</p>
+        <p>{{ product.info }}</p>
+        <p>{{ product.description }}</p>
+        <p>{{ product.price }}</p>
+        <p>{{ calcPrice }}</p>
+        <button @click="generateDiscount">скидка {{ discount }} %</button>
+        <p>Вы разрабатываете простое приложение для отображения списка пользователей. У вас есть массив объектов users, где каждый объект представляет одного пользователя с его именем и возрастом. Вам необходимо отобразить каждого пользователя из массива в виде списка на странице.</p>
+
+        <li v-for="item in users" :key="item.id">{{ item.name }}, {{ item.age }} old</li>
+
+       
+
+
+    </div>
+
+
+
+    <script>
+        new Vue({
+            el: '#app', 
+            data: {
+                product: {
+                    info: 'помада',
+                    description: 'хорошая',
+                    price: 1000,
+                },
+                discount: 0,
+                users: [{
+                    name: 'Bari',
+                    age: '33'
+                },
+                {
+                    name: 'Mari',
+                    age: '30'
+                },
+                {
+                    name: 'Mari',
+                    age: '30'
+                }],
+
+            },
+            methods: {
+                generateDiscount() {
+                    this.discount = Math.floor(Math.random() * 20)
+                },
+            },
+            computed: {
+                calcPrice(){
+                    return this.product.price - (this.product.price * this.discount / 100);
+                }
+            }
+        })
+    </script>
+    
+</body>
+</html>
